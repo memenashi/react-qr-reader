@@ -1,11 +1,10 @@
-import * as React from 'react';
+import { FC } from 'react';
 
 import { styles } from './styles';
 import { useQrReader } from './hooks';
+import { QrReaderProps } from '../type/type';
 
-import { QrReaderProps } from '../types';
-
-export const QrReader: React.FC<QrReaderProps> = ({
+export const QrReader: FC<QrReaderProps> = ({
   videoContainerStyle,
   containerStyle,
   videoStyle,

@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { Story } from '@storybook/react';
+import { useState } from 'react';
+import { StoryFn } from '@storybook/react';
 
 import { ViewFinder } from './ViewFinder';
-
-import { QrReader } from '../dist/esm';
-import { QrReaderProps } from '../dist';
+import { QrReaderProps } from '../type/type';
+import { QrReader } from '..';
 
 const styles = {
   container: {
@@ -13,9 +12,9 @@ const styles = {
   },
 };
 
-const Template: Story<QrReaderProps> = (args) => {
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
+const Template: StoryFn<QrReaderProps> = (args) => {
+  const [error, setError] = useState('');
+  const [data, setData] = useState('');
 
   return (
     <div style={styles.container}>
@@ -23,7 +22,7 @@ const Template: Story<QrReaderProps> = (args) => {
         {...args}
         onResult={(result, error) => {
           if (result) {
-            setData(result);
+            setData(result.getText());
           }
 
           if (error) {

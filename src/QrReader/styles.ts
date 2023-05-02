@@ -1,4 +1,4 @@
-export const styles: any = {
+export const styles = {
   container: {
     width: '100%',
     paddingTop: '100%',

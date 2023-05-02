@@ -1,7 +1,7 @@
 import { BrowserQRCodeReader } from '@zxing/browser';
 import { Result } from '@zxing/library';
 
-export type QrReaderProps = {
+interface QrReaderProps {
   /**
    * Media track constraints object, to specify which camera and capabilities to use
    */
@@ -38,9 +38,9 @@ export type QrReaderProps = {
    * Property that represents a style for the video
    */
   videoStyle?: any;
-};
+}
 
-export type OnResultFunction = (
+type OnResultFunction = (
   /**
    * The QR values extracted by Zxing
    */
@@ -55,7 +55,7 @@ export type OnResultFunction = (
   codeReader?: BrowserQRCodeReader
 ) => void;
 
-export type UseQrReaderHookProps = {
+interface UseQrReaderHookProps {
   /**
    * Media constraints object, to specify which camera and capabilities to use
    */
@@ -72,6 +72,6 @@ export type UseQrReaderHookProps = {
    * Property that represents the ID of the video element
    */
   videoId?: string;
-};
+}
 
-export type UseQrReaderHook = (props: UseQrReaderHookProps) => void;
+type UseQrReaderHook = (props: UseQrReaderHookProps) => void;
