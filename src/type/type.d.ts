@@ -1,5 +1,5 @@
-import { BrowserQRCodeReader } from '@zxing/browser';
-import { Result } from '@zxing/library';
+import BrowserQRCodeReader from '@zxing/browser/esm/readers/BrowserQRCodeReader';
+import Result from '@zxing/library/esm/core/Result';
 
 interface QrReaderProps {
   /**

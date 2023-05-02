@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
-import { styles } from './styles';
-import { useQrReader } from './hooks';
+import { styles } from '../lib/styles';
+import { useQrReader } from '../hooks/useQrReader';
 import { QrReaderProps } from '../type/type';
 
 export const QrReader: FC<QrReaderProps> = ({
@@ -48,7 +48,7 @@ export const QrReader: FC<QrReaderProps> = ({
 QrReader.displayName = 'QrReader';
 QrReader.defaultProps = {
   constraints: {
-    facingMode: 'user',
+    facingMode: 'environment',
   },
   videoId: 'video',
   scanDelay: 500,

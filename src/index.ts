@@ -1,1 +1,1 @@
-export { QrReader } from './QrReader';
+export { QrReader } from './components/QrReader';
