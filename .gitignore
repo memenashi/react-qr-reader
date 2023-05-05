@@ -7,4 +7,5 @@ node_modules
 pkg
 dist
 storybook-static
+.npmrc
 .DS_Store
