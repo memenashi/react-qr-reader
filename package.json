@@ -4,19 +4,14 @@
   "description": "A React Component for reading QR codes from the webcam",
   "scripts": {
     "build": "rollup --config rollup.config.js",
-    "prepublish": "yarn build",
-    "lint": "eslint --fix 'src/**'",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "deploy-storybook": "storybook-to-ghpages"
+    "storybook": "storybook dev -p 6006"
   },
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "type": "module",
-  "files": [
-    "dist",
-    "types"
-  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/memenashi/react-qr-reader.git"
@@ -27,7 +22,7 @@
     "qrcode",
     "qrreader"
   ],
-  "author": "thomas billiet",
+  "author": "memenashi",
   "license": "MIT",
   "peerDependencies": {
     "react": "^18.2.0",
@@ -66,7 +61,6 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-storybook": "^0.6.11",
-    "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
     "react-docgen-typescript-loader": "^3.7.2",
@@ -81,17 +75,5 @@
     "storybook": "^7.0.7",
     "ts-loader": "^9.4.2",
     "typescript": "^5.0.0"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js,json,css,md,scss}": [
-      "prettier --write",
-      "git add"
-    ]
   }
 }
