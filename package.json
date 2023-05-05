@@ -1,6 +1,6 @@
 {
   "name": "@memenashi/react-qr-reader",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A React Component for reading QR codes from the webcam",
   "scripts": {
     "build": "rollup --config rollup.config.js",
@@ -9,14 +9,13 @@
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "type": "module",
-  "publishConfig": {
-    "access": "public"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/memenashi/react-qr-reader.git"
   },
-  "files":["dist"],
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "react",
     "qr",
