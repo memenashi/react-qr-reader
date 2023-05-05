@@ -16,6 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/memenashi/react-qr-reader.git"
   },
+  "files":["dist"],
   "keywords": [
     "react",
     "qr",
