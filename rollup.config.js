@@ -23,13 +23,19 @@ export default [
       },
     ],
     plugins: [
-      peerDepsExternal({
-        packageJson,
-        include: ['react', 'react-dom'],
-      }),
+      peerDepsExternal(),
       resolve({ browser: true }),
       commonjs(),
-      typescript(),
+      typescript({
+        tsconfigOverride: {
+          compilerOptions: {
+            declaration: true,
+            declarationDir: "dist",
+          },
+          include: ["src/**/*.ts", "src/**/*.tsx"],
+          exclude: ["**/*.test.ts", "**/*.test.tsx"],
+        }
+      }),
       terser(),
     ],
   },
