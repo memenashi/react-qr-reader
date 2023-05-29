@@ -1,7 +1,7 @@
-import BrowserQRCodeReader from '@zxing/browser/esm/readers/BrowserQRCodeReader';
+import { BrowserQRCodeReader } from '@zxing/browser';
 import Result from '@zxing/library/esm/core/Result';
 
-interface QrReaderProps {
+export interface QrReaderProps {
   /**
    * Media track constraints object, to specify which camera and capabilities to use
    */
@@ -40,7 +40,7 @@ interface QrReaderProps {
   videoStyle?: any;
 }
 
-type OnResultFunction = (
+export type OnResultFunction = (
   /**
    * The QR values extracted by Zxing
    */
@@ -55,7 +55,7 @@ type OnResultFunction = (
   codeReader?: BrowserQRCodeReader
 ) => void;
 
-interface UseQrReaderHookProps {
+export interface UseQrReaderHookProps {
   /**
    * Media constraints object, to specify which camera and capabilities to use
    */
@@ -74,4 +74,4 @@ interface UseQrReaderHookProps {
   videoId?: string;
 }
 
-type UseQrReaderHook = (props: UseQrReaderHookProps) => void;
+export type UseQrReaderHook = (props: UseQrReaderHookProps) => void;
