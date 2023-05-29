@@ -1,30 +1,26 @@
-# React QR Reader
+# 1. React QR Reader
 
 **Attention!!!!**
 
 This repository and library is fork from here https://github.com/JodusNodus/react-qr-reader
 
-## Table of contents
+## Table of contents <!-- omit in toc -->
 
-- [Table of contents](#table-of-contents)
-- [Use Case](#use-case)
-- [Compatibility](#compatibility)
-- [Installation](#installation)
-  - [NPM](#npm)
-  - [YARN](#yarn)
-- [Example Usage](#example-usage)
-- [Component API](#component-api)
-- [Maintainers](#maintainers)
-- [Browser Support](#browser-support)
-- [Issues](#issues)
-- [Contributing](#contributing)
-- [License](#license)
+- [1. Use Case](#1-use-case)
+- [2. Compatibility](#2-compatibility)
+- [3. Installation](#3-installation)
+  - [3.1. NPM](#31-npm)
+  - [3.2. YARN](#32-yarn)
+- [4. Example Usage](#4-example-usage)
+- [5. Component API](#5-component-api)
+- [6. Maintainers](#6-maintainers)
+- [7. Browser Support](#7-browser-support)
 
-## Use Case
+## 1. Use Case
 
 You need a component for Scanning QR codes from a web browser based app.
 
-## Compatibility
+## 2. Compatibility
 
 This component has been tested in the following browsers:
 
@@ -34,23 +30,23 @@ This component has been tested in the following browsers:
 
 Since this library does internal use of hooks you need `React >= 18.2.0`.
 
-## Installation
+## 3. Installation
 
 You can install this library via NPM or YARN.
 
-### NPM
+### 3.1. NPM
 
 ```bash
 npm i react-qr-reader
 ```
 
-### YARN
+### 3.2. YARN
 
 ```bash
 yarn add react-qr-reader
 ```
 
-## Example Usage
+## 4. Example Usage
 
 After reading and performing the previous steps, you should be able to import the library and use it like in this example:
 
@@ -83,7 +79,7 @@ const Test = () => {
 };
 ```
 
-## Component API
+## 5. Component API
 
 The `QrReader` component has the following props:
 
@@ -99,23 +95,13 @@ The `QrReader` component has the following props:
 | videoContainerStyle | object                                                                                          | none                     | Style object for the video container element.            |
 | videoStyle          | object                                                                                          | none                     | Style object for the video element.                      |
 
-## Maintainers
+## 6. Maintainers
 
-- Created by [@JodusNodus](https://github.com/JodusNodus) .
-- Revived thanks to [@JonatanSalas](https://github.com/JonatanSalas) and his company [@BlackBoxVision](https://github.com/BlackBoxVision) .
+- Current Maintainers [@memenashi](https://github.com/memenashi)
 
-## Browser Support
+
+- Original Author [@JodusNodus](https://github.com/JodusNodus)
+
+## 7. Browser Support
 
 If you need to support older browsers, checkout [this guide](https://github.com/zxing-js/library#browser-support) in how to make it compatible with legacy ones
-
-## Issues
-
-Please, open an [issue](https://github.com/react-qr-reader/react-qr-reader/issues) following one of the issues templates. We will do our best to fix them.
-
-## Contributing
-
-If you want to contribute to this project see [contributing](https://github.com/react-qr-reader/react-qr-reader/blob/master/CONTRIBUTING.md) for more information.
-
-## License
-
-Distributed under the **MIT license**. See [LICENSE](https://github.com/react-qr-reader/react-qr-reader/blob/master/LICENSE) for more information.
