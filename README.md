@@ -1,23 +1,24 @@
-# React QR Reader [![npm version](https://badge.fury.io/js/react-qr-reader.svg)](https://badge.fury.io/js/react-qr-reader) [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Known Vulnerabilities](https://snyk.io/test/github/react-qr-reader/react-qr-reader/badge.svg)](https://snyk.io/test/github/react-qr-reader/react-qr-reader)
+# React QR Reader
 
-:rocket: React QR Reader component. Check out the [demo](https://react-qr-reader.github.io/react-qr-reader/).
+**Attention!!!!**
+
+This repository and library is fork from here https://github.com/JodusNodus/react-qr-reader
 
 ## Table of contents
 
-- [React QR Reader ](#react-qr-reader---)
-  - [Table of contents](#table-of-contents)
-  - [Use Case](#use-case)
-  - [Compatibility](#compatibility)
-  - [Installation](#installation)
-    - [NPM](#npm)
-    - [YARN](#yarn)
-  - [Example Usage](#example-usage)
-  - [Component API](#component-api)
-  - [Maintainers](#maintainers)
-  - [Browser Support](#browser-support)
-  - [Issues](#issues)
-  - [Contributing](#contributing)
-  - [License](#license)
+- [Table of contents](#table-of-contents)
+- [Use Case](#use-case)
+- [Compatibility](#compatibility)
+- [Installation](#installation)
+  - [NPM](#npm)
+  - [YARN](#yarn)
+- [Example Usage](#example-usage)
+- [Component API](#component-api)
+- [Maintainers](#maintainers)
+- [Browser Support](#browser-support)
+- [Issues](#issues)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Use Case
 
@@ -53,29 +54,31 @@ yarn add react-qr-reader
 
 After reading and performing the previous steps, you should be able to import the library and use it like in this example:
 
-```javascript
+```jsx
 import React, { useState } from 'react';
 import { QrReader } from 'react-qr-reader';
 
-const Test = (props) => {
-  const [data, setData] = useState('No result');
+const Test = () => {
+  const [error, setError] = useState('');
+  const [data, setData] = useState('');
 
   return (
-    <>
+    <div style={styles.container}>
       <QrReader
+        {...args}
         onResult={(result, error) => {
-          if (!!result) {
-            setData(result?.text);
+          if (result) {
+            setData(result.getText());
           }
 
-          if (!!error) {
-            console.info(error);
+          if (error) {
+            setError(error.message);
           }
         }}
-        style={{ width: '100%' }}
       />
-      <p>{data}</p>
-    </>
+      <p>The value is: {JSON.stringify(data, null, 2)}</p>
+      <p>The error is: {error}</p>
+    </div>
   );
 };
 ```
