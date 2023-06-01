@@ -77,6 +77,6 @@
     "source-map-explorer": "^2.5.3",
     "storybook": "^7.0.18",
     "ts-loader": "^9.4.3",
-    "typescript": "^5.0.4"
+    "typescript": "^5.1.3"
   }
 }
