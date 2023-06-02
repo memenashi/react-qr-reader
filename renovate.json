@@ -2,6 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base"],
   "rangeStrategy": "bump",
+  "schedule": ["before 2am on Saturday"],
   "packageRules": [
     {
       "matchUpdateTypes": ["patch", "minor"],
