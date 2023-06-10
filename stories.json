@@ -1,0 +1,1 @@
+{"v":3,"stories":{"browser-qr-reader--scan-code":{"id":"browser-qr-reader--scan-code","title":"Browser QR Reader","name":"Scan Code","importPath":"./src/components/QrReader.stories.tsx","tags":["story"],"kind":"Browser QR Reader","story":"Scan Code","parameters":{"__id":"browser-qr-reader--scan-code","docsOnly":false,"fileName":"./src/components/QrReader.stories.tsx"}}}}
