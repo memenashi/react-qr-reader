@@ -6,7 +6,10 @@
     "build": "rollup --config rollup.config.js",
     "prettier:fix": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "eslint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
-    "storybook": "storybook dev -p 6006 --https --ssl-cert ./certs/storybook.cert --ssl-key ./certs/storybook.key"
+    "storybook": "storybook dev -p 6006 --https --ssl-cert ./certs/storybook.cert --ssl-key ./certs/storybook.key",
+    "storybook:build": "storybook build -o ./storybook-static",
+    "predeploy": "storybook build -o ./storybook-static",
+    "deploy": "gh-pages -d storybook-static"
   },
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -65,6 +68,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-storybook": "^0.6.12",
+    "gh-pages": "^5.0.0",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
     "react-docgen-typescript-loader": "^3.7.2",
