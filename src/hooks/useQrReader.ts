@@ -1,8 +1,10 @@
 import { MutableRefObject, useEffect, useRef } from 'react';
 import { isMediaDevicesSupported, isValidType } from '../lib/utils';
 import { UseQrReaderHook } from '../type/type';
-import { IScannerControls } from '@zxing/browser/esm/common/IScannerControls';
-import { BrowserQRCodeReader } from '@zxing/browser/esm/readers/BrowserQRCodeReader';
+import { Result } from '@zxing/library';
+import { BrowserQRCodeReader, IScannerControls } from '@zxing/browser';
+
+let codeReader: BrowserQRCodeReader | undefined = undefined;
 
 // TODO: add support for debug logs
 export const useQrReader: UseQrReaderHook = ({
@@ -14,9 +16,11 @@ export const useQrReader: UseQrReaderHook = ({
   const controlsRef: MutableRefObject<IScannerControls | undefined> = useRef();
 
   useEffect(() => {
-    const codeReader = new BrowserQRCodeReader(undefined, {
-      delayBetweenScanAttempts,
-    });
+    if (!codeReader) {
+      codeReader = new BrowserQRCodeReader(undefined, {
+        delayBetweenScanAttempts,
+      });
+    }
 
     if (
       !isMediaDevicesSupported() &&
@@ -29,7 +33,7 @@ export const useQrReader: UseQrReaderHook = ({
     }
 
     codeReader
-      .decodeFromConstraints({ video }, videoId, (result, error) => {
+      .decodeFromConstraints({ video }, videoId, (result: Result | null | undefined, error: Error | null | undefined) => {
         onResult?.(result, error, codeReader);
       })
       .then((controls: IScannerControls) => (controlsRef.current = controls))
