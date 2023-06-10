@@ -1,27 +1,82 @@
-import { MutableRefObject, useEffect, useRef } from 'react';
-import { isMediaDevicesSupported, isValidType } from '../lib/utils';
-import { UseQrReaderHook } from '../type/type';
+import {
+  MutableRefObject,
+  RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import { Result } from '@zxing/library';
 import { BrowserQRCodeReader, IScannerControls } from '@zxing/browser';
 
-let codeReader: BrowserQRCodeReader | undefined = undefined;
+import { isMediaDevicesSupported, isValidType } from '../lib/utils';
 
-// TODO: add support for debug logs
+type DecodeResult = Result | null | undefined;
+
+interface UseQrReaderHookProps {
+  /**
+   * Media constraints object, to specify which camera and capabilities to use
+   */
+  constraints?: MediaTrackConstraints;
+  /**
+   * Callback for retrieving the result
+   */
+  onResult?: OnResultFunction;
+  /**
+   * Callback for retrieving the error
+   */
+  onError?: OnErrorFunction;
+  /**
+   * Property that represents the scan period
+   */
+  scanDelay?: number;
+  /**
+   * Property that represents the ID of the video element
+   */
+  videoId?: string;
+}
+
+interface UseQrReaderReturn {
+  controls: IScannerControls | undefined;
+  videoRef: RefObject<HTMLVideoElement> | undefined;
+  // videoDevices: MediaDeviceInfo[];
+}
+
+type UseQrReaderHook = (props: UseQrReaderHookProps) => UseQrReaderReturn;
+
+export type OnResultFunction = (result: DecodeResult) => void;
+export type OnErrorFunction = (error: unknown) => void;
+
 export const useQrReader: UseQrReaderHook = ({
   scanDelay: delayBetweenScanAttempts,
   constraints: video,
   onResult,
-  videoId,
+  onError,
 }) => {
   const controlsRef: MutableRefObject<IScannerControls | undefined> = useRef();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const startScanner = useCallback(async () => {
+    // const devices = await BrowserQRCodeReader.listVideoInputDevices();
+    // const deviceId = devices[0]?.deviceId;
+    // if (deviceId) return;
+    if (videoRef.current == null) return;
+    const reader = new BrowserQRCodeReader(undefined, {
+      delayBetweenScanAttempts,
+    });
+    try {
+      const controls = await reader.decodeFromConstraints(
+        { video },
+        videoRef.current,
+        (result: DecodeResult) => onResult?.(result)
+      );
+      controlsRef.current = controls;
+    } catch (e) {
+      onError?.(e);
+    }
+  }, [delayBetweenScanAttempts, onError, onResult, video]);
 
   useEffect(() => {
-    if (!codeReader) {
-      codeReader = new BrowserQRCodeReader(undefined, {
-        delayBetweenScanAttempts,
-      });
-    }
-
     if (
       !isMediaDevicesSupported() &&
       isValidType(onResult, 'onResult', 'function')
@@ -29,18 +84,15 @@ export const useQrReader: UseQrReaderHook = ({
       const message =
         'MediaDevices API has no support for your browser. You can fix this by running "npm i webrtc-adapter"';
 
-      onResult?.(null, new Error(message), codeReader);
+      onError?.(new Error(message));
     }
-
-    codeReader
-      .decodeFromConstraints({ video }, videoId, (result: Result | null | undefined, error: Error | null | undefined) => {
-        onResult?.(result, error, codeReader);
-      })
-      .then((controls: IScannerControls) => (controlsRef.current = controls))
-      .catch((error: Error) => {
-        onResult?.(null, error, codeReader);
-      });
+    startScanner();
 
     return () => controlsRef.current?.stop();
-  }, []);
+  }, [delayBetweenScanAttempts, onError, onResult, startScanner]);
+
+  return {
+    controls: controlsRef.current,
+    videoRef: videoRef,
+  };
 };

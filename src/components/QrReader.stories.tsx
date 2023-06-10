@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { ViewFinder } from './ViewFinder';
-import { QrReaderProps } from '../type/type';
 import { QrReader } from '..';
+import { QrReaderProps } from './QrReader';
 
 const styles = {
   container: {
@@ -20,15 +20,8 @@ const Template: StoryFn<QrReaderProps> = (args) => {
     <div style={styles.container}>
       <QrReader
         {...args}
-        onResult={(result, error) => {
-          if (result) {
-            setData(result.getText());
-          }
-
-          if (error) {
-            setError(error.message);
-          }
-        }}
+        onResult={(result) => setData(result?.getText() ?? 'No result')}
+        onError={(err) => setError(err.message)}
       />
       <p>The value is: {JSON.stringify(data, null, 2)}</p>
       <p>The error is: {error}</p>
