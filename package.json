@@ -5,7 +5,8 @@
   "scripts": {
     "build": "rollup --config rollup.config.js",
     "prettier:fix": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-    "storybook": "storybook dev -p 6006"
+    "eslint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
+    "storybook": "storybook dev -p 6006 --https --ssl-cert ./certs/storybook.cert --ssl-key ./certs/storybook.key"
   },
   "main": "dist/index.js",
   "module": "dist/index.es.js",
