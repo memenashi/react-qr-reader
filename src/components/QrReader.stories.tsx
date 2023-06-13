@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { ViewFinder } from './ViewFinder';
-import { QrReaderProps } from '../type/type';
 import { QrReader } from '..';
+import { QrReaderProps } from './QrReader';
 
 const styles = {
   container: {
-    width: '400px',
+    width: '100vw',
+    maxWidth: '300px',
     margin: 'auto',
   },
 };
@@ -20,15 +21,11 @@ const Template: StoryFn<QrReaderProps> = (args) => {
     <div style={styles.container}>
       <QrReader
         {...args}
-        onResult={(result, error) => {
-          if (result) {
-            setData(result.getText());
-          }
-
-          if (error) {
-            setError(error.message);
-          }
+        onResult={(result) => {
+          console.log(new Date(), result);
+          setData(result?.getText() ?? 'No result');
         }}
+        onError={(err) => setError(err.message)}
       />
       <p>The value is: {JSON.stringify(data, null, 2)}</p>
       <p>The error is: {error}</p>
@@ -43,7 +40,7 @@ ScanCode.args = {
   videoId: 'video',
   scanDelay: 500,
   constraints: {
-    facingMode: 'user',
+    facingMode: 'environment',
   },
 };
 

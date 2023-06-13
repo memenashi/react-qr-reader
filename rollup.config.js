@@ -35,7 +35,7 @@ export default [
             declarationDir: 'dist',
           },
           include: ['src/**/*.ts', 'src/**/*.tsx'],
-          exclude: ['**/*.test.ts', '**/*.test.tsx'],
+          exclude: ['**/*.(test|stories).(ts|tsx)'],
         },
       }),
       terser(),

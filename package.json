@@ -1,14 +1,22 @@
 {
   "name": "@memenashi/react-qr-reader",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A React Component for reading QR codes from the webcam",
   "scripts": {
     "build": "rollup --config rollup.config.js",
-    "prettier:fix":"prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-    "storybook": "storybook dev -p 6006"
+    "prettier": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",
+    "prettier:fix": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
+    "eslint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
+    "lint": "npm-run-all prettier eslint",
+    "storybook": "storybook dev -p 6006 --https --ssl-cert ./certs/storybook.cert --ssl-key ./certs/storybook.key",
+    "storybook:build": "storybook build -o ./storybook-static",
+    "predeploy": "storybook build -o ./storybook-static",
+    "deploy": "gh-pages -d storybook-static"
   },
   "main": "dist/index.js",
   "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "repository": {
     "type": "git",
@@ -55,6 +63,7 @@
     "@typescript-eslint/parser": "^5.59.9",
     "babel-loader": "^9.1.2",
     "eslint": "^8.42.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-flowtype": "^8.0.3",
     "eslint-plugin-import": "^2.27.5",
@@ -62,6 +71,8 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-storybook": "^0.6.12",
+    "gh-pages": "^5.0.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
     "react-docgen-typescript-loader": "^3.7.2",
