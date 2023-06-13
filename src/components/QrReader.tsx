@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useState } from 'react';
+import { CSSProperties, FC } from 'react';
 
 import { styles } from '../lib/styles';
 import { OnResultFunction, useQrReader } from '../hooks/useQrReader';

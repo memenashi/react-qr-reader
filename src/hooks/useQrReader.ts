@@ -3,7 +3,6 @@ import {
   RefObject,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
 } from 'react';
 import { Result } from '@zxing/library';
@@ -68,7 +67,9 @@ export const useQrReader: UseQrReaderHook = ({
       const controls = await reader.decodeFromConstraints(
         { video },
         videoRef.current,
-        (result: DecodeResult) => onResult?.(result)
+        (result: DecodeResult) => {
+          if (result) onResult?.(result);
+        }
       );
       controlsRef.current = controls;
     } catch (e) {
