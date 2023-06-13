@@ -1,0 +1,19 @@
+name: Publish Storybook to GitHub Pages
+
+on:
+  push:
+    branches: ['master']
+
+jobs:
+  deploy-storybook:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: Deploy Storybook
+          uses: actions/setup-node@v3
+          with:
+            node-version: '18.x'
+            cache: 'yarn'
+        - run: yarn install --frozen-lockfile;
+        - run: yarn deploy
+        
