@@ -11,7 +11,7 @@ export interface QrReaderProps {
   /**
    * Called when a result is found.
    */
-  onResult?: OnResultFunction;
+  onResult: OnResultFunction;
   /**
    * Called when an error occurs.
    */
@@ -57,7 +57,7 @@ export const QrReader: FC<QrReaderProps> = ({
   onResult,
   videoId,
 }) => {
-  const { controls, videoRef } = useQrReader({
+  const { videoRef } = useQrReader({
     constraints,
     scanDelay,
     onResult,
@@ -66,9 +66,6 @@ export const QrReader: FC<QrReaderProps> = ({
 
   return (
     <section className={className} style={containerStyle}>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <span>{String(controls)}</span>
-      </div>
       <div
         style={{
           ...styles.container,

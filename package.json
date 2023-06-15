@@ -12,7 +12,8 @@
     "storybook": "storybook dev -p 6006 --https --ssl-cert ./certs/storybook.cert --ssl-key ./certs/storybook.key",
     "storybook:build": "storybook build -o ./storybook-static",
     "predeploy": "storybook build -o ./storybook-static",
-    "deploy": "gh-pages -d storybook-static"
+    "deploy": "gh-pages -d storybook-static",
+    "prebuild": "tsc"
   },
   "main": "dist/index.js",
   "module": "dist/index.es.js",

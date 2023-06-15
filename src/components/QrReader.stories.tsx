@@ -21,7 +21,7 @@ const Template: StoryFn<QrReaderProps> = (args) => {
     <div style={styles.container}>
       <QrReader
         {...args}
-        onResult={(result) => {
+        onResult={async (result) => {
           console.log(new Date(), result);
           setData(result?.getText() ?? 'No result');
         }}
