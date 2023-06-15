@@ -73,7 +73,7 @@ export const useQrReader: UseQrReaderHook = ({
           { video },
           videoRef.current
         );
-        if(previousScan.current?.getText() == result?.getText()) continue;
+        if (previousScan.current?.getText() == result?.getText()) continue;
         previousScan.current = result;
         await onResult(result).then(() => (f = false));
       }

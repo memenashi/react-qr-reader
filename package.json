@@ -9,6 +9,7 @@
     "eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "eslint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint": "npm-run-all prettier eslint",
+    "lint:fix": "run-s prettier:fix eslint:fix",
     "storybook": "storybook dev -p 6006 --https --ssl-cert ./certs/storybook.cert --ssl-key ./certs/storybook.key",
     "storybook:build": "storybook build -o ./storybook-static",
     "predeploy": "storybook build -o ./storybook-static",
