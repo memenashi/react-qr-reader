@@ -1,14 +1,8 @@
-import {
-  MutableRefObject,
-  RefObject,
-  useCallback,
-  useEffect,
-  useRef,
-} from 'react';
+import { RefObject, useCallback, useEffect, useMemo, useRef } from 'react';
 import { Result } from '@zxing/library';
 import { BrowserQRCodeReader, IScannerControls } from '@zxing/browser';
 
-import { isMediaDevicesSupported, isValidType } from '../lib/utils';
+import { delay, isMediaDevicesSupported, isValidType } from '../lib/utils';
 
 type DecodeResult = Result | null | undefined;
 
@@ -20,7 +14,7 @@ interface UseQrReaderHookProps {
   /**
    * Callback for retrieving the result
    */
-  onResult?: OnResultFunction;
+  onResult: OnResultFunction;
   /**
    * Callback for retrieving the error
    */
@@ -36,46 +30,57 @@ interface UseQrReaderHookProps {
 }
 
 interface UseQrReaderReturn {
-  controls: IScannerControls | undefined;
   videoRef: RefObject<HTMLVideoElement> | undefined;
-  // videoDevices: MediaDeviceInfo[];
 }
 
 type UseQrReaderHook = (props: UseQrReaderHookProps) => UseQrReaderReturn;
 
-export type OnResultFunction = (result: DecodeResult) => void;
-export type OnErrorFunction = (error: unknown) => void;
+export type OnResultFunction = (
+  result: DecodeResult,
+  control?: IScannerControls
+) => Promise<void>;
+export type OnErrorFunction = (
+  error: unknown,
+  control?: IScannerControls
+) => void;
+
+let qrReader: BrowserQRCodeReader | undefined;
 
 export const useQrReader: UseQrReaderHook = ({
-  scanDelay: delayBetweenScanAttempts,
+  scanDelay = 200,
   constraints: video,
   onResult,
   onError,
 }) => {
-  const controlsRef: MutableRefObject<IScannerControls | undefined> = useRef();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const previousScan = useRef<Result | null>();
+  const reader = useMemo(() => {
+    if (!qrReader) {
+      qrReader = new BrowserQRCodeReader(undefined, {
+        delayBetweenScanAttempts: scanDelay,
+      });
+    }
+    return qrReader;
+  }, [scanDelay]);
 
   const startScanner = useCallback(async () => {
-    // const devices = await BrowserQRCodeReader.listVideoInputDevices();
-    // const deviceId = devices[0]?.deviceId;
-    // if (deviceId) return;
     if (videoRef.current == null) return;
-    const reader = new BrowserQRCodeReader(undefined, {
-      delayBetweenScanAttempts,
-    });
+    let f = true;
     try {
-      const controls = await reader.decodeFromConstraints(
-        { video },
-        videoRef.current,
-        (result: DecodeResult) => {
-          if (result) onResult?.(result);
-        }
-      );
-      controlsRef.current = controls;
+      while (f) {
+        delay(scanDelay);
+        const result = await reader.decodeOnceFromConstraints(
+          { video },
+          videoRef.current
+        );
+        if(previousScan.current?.getText() == result?.getText()) continue;
+        previousScan.current = result;
+        await onResult(result).then(() => (f = false));
+      }
     } catch (e) {
       onError?.(e);
     }
-  }, [delayBetweenScanAttempts, onError, onResult, video]);
+  }, [scanDelay, onError, onResult, reader, video]);
 
   useEffect(() => {
     if (
@@ -88,12 +93,9 @@ export const useQrReader: UseQrReaderHook = ({
       onError?.(new Error(message));
     }
     startScanner();
-
-    return () => controlsRef.current?.stop();
-  }, [delayBetweenScanAttempts, onError, onResult, startScanner]);
+  }, [scanDelay, onError, onResult, startScanner]);
 
   return {
-    controls: controlsRef.current,
-    videoRef: videoRef,
+    videoRef,
   };
 };
