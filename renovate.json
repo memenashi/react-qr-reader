@@ -6,17 +6,17 @@
   "packageRules": [
     {
       "matchUpdateTypes": ["patch", "minor"],
-      "matchPackagePatterns": ["^@storybook", "^storybook"],
+      "matchPackagePatterns": ["^@storybook.*", "^storybook.*"],
       "groupName": "storybook"
     },
     {
       "matchUpdateTypes": ["patch", "minor"],
-      "matchPackagePatterns": "^rollup",
+      "matchPackagePatterns": "^rollup.*",
       "groupName": "rollup and plugins"
     },
     {
       "matchUpdateTypes": ["patch", "minor"],
-      "matchPackagePatterns": "^eslint",
+      "matchPackagePatterns": "^eslint.*",
       "groupName": "eslint and plugins"
     },
     {
@@ -26,7 +26,7 @@
     },
     {
       "matchUpdateTypes": ["patch", "minor"],
-      "matchPackagePatterns": ["!^@storybook", "!^storybook", "!^rollup", "!^eslint", ".*"],
+      "matchPackagePatterns": ["!(^@storybook.*)", "!(^storybook.*)", "!(^rollup.*)", "!(^eslint.*)", ".*"],
       "groupName": "other minor and patch dependencies"
     }
   ]
