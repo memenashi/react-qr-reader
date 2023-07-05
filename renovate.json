@@ -21,8 +21,13 @@
     },
     {
       "matchUpdateTypes": ["patch", "minor"],
-      "excludePackageNames": ["typescript"],
+      "matchPackagePatterns": ["typescript"],
       "groupName": "minor and patch dependencies"
+    },
+    {
+      "matchUpdateTypes": ["patch", "minor"],
+      "matchPackagePatterns": ["!^@storybook", "!^storybook", "!^rollup", "!^eslint", ".*"],
+      "groupName": "other minor and patch dependencies"
     }
   ]
 }
