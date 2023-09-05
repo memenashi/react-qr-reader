@@ -4,7 +4,7 @@ import { BrowserQRCodeReader, IScannerControls } from '@zxing/browser';
 
 import { delay, isMediaDevicesSupported, isValidType } from '../lib/utils';
 
-type DecodeResult = Result | null | undefined;
+export type DecodeResult = Result | null | undefined;
 
 interface UseQrReaderHookProps {
   /**
