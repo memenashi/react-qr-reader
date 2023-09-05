@@ -93,6 +93,8 @@ export const useQrReader: UseQrReaderHook = ({
       onError?.(new Error(message));
     }
     startScanner();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => videoRef.current?.pause();
   }, [scanDelay, onError, onResult, startScanner]);
 
   return {
