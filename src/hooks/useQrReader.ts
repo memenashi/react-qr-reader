@@ -48,12 +48,13 @@ let qrReader: BrowserQRCodeReader | undefined;
 
 export const useQrReader: UseQrReaderHook = ({
   scanDelay = 200,
-  constraints: video,
   onResult,
   onError,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const control = useRef<IScannerControls | null>();
   const previousScan = useRef<Result | null>();
+
   const reader = useMemo(() => {
     if (!qrReader) {
       qrReader = new BrowserQRCodeReader(undefined, {
@@ -65,22 +66,27 @@ export const useQrReader: UseQrReaderHook = ({
 
   const startScanner = useCallback(async () => {
     if (videoRef.current == null) return;
-    let f = true;
+    const deviceList = await BrowserQRCodeReader.listVideoInputDevices();
+    const deviceId = deviceList?.[1].deviceId;
     try {
-      while (f) {
-        delay(scanDelay);
-        const result = await reader.decodeOnceFromConstraints(
-          { video },
-          videoRef.current
-        );
-        if (previousScan.current?.getText() == result?.getText()) continue;
-        previousScan.current = result;
-        await onResult(result).then(() => (f = false));
-      }
+      delay(scanDelay);
+      control.current = await reader.decodeFromVideoDevice(
+        deviceId,
+        videoRef.current,
+        async (result) => {
+          if (
+            result?.getText() &&
+            result?.getText() !== previousScan.current?.getText()
+          ) {
+            previousScan.current = result;
+            await onResult?.(result);
+          }
+        }
+      );
     } catch (e) {
       onError?.(e);
     }
-  }, [scanDelay, onError, onResult, reader, video]);
+  }, [scanDelay, onError, onResult, reader]);
 
   useEffect(() => {
     if (
@@ -93,8 +99,11 @@ export const useQrReader: UseQrReaderHook = ({
       onError?.(new Error(message));
     }
     startScanner();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    return () => videoRef.current?.pause();
+    return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      videoRef.current?.pause();
+      control.current?.stop();
+    };
   }, [scanDelay, onError, onResult, startScanner]);
 
   return {
