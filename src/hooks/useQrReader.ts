@@ -1,4 +1,11 @@
-import { RefObject, useCallback, useEffect, useMemo, useRef } from 'react';
+import {
+  RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Result } from '@zxing/library';
 import { BrowserQRCodeReader, IScannerControls } from '@zxing/browser';
 
@@ -7,6 +14,7 @@ import { delay, isMediaDevicesSupported, isValidType } from '../lib/utils';
 type DecodeResult = Result | null | undefined;
 
 interface UseQrReaderHookProps {
+  defaultDeviceId?: 0 | 1;
   /**
    * Media constraints object, to specify which camera and capabilities to use
    */
@@ -47,6 +55,7 @@ export type OnErrorFunction = (
 let qrReader: BrowserQRCodeReader | undefined;
 
 export const useQrReader: UseQrReaderHook = ({
+  defaultDeviceId = 0,
   scanDelay = 200,
   onResult,
   onError,
@@ -54,6 +63,7 @@ export const useQrReader: UseQrReaderHook = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const control = useRef<IScannerControls | null>();
   const previousScan = useRef<Result | null>();
+  const [deviceIdIndex, setDeviceIdIndex] = useState<number>(defaultDeviceId);
 
   const reader = useMemo(() => {
     if (!qrReader) {
@@ -67,7 +77,7 @@ export const useQrReader: UseQrReaderHook = ({
   const startScanner = useCallback(async () => {
     if (videoRef.current == null) return;
     const deviceList = await BrowserQRCodeReader.listVideoInputDevices();
-    const deviceId = deviceList?.[1].deviceId;
+    const deviceId = deviceList?.[deviceIdIndex]?.deviceId;
     try {
       delay(scanDelay);
       control.current = await reader.decodeFromVideoDevice(
@@ -86,7 +96,7 @@ export const useQrReader: UseQrReaderHook = ({
     } catch (e) {
       onError?.(e);
     }
-  }, [scanDelay, onError, onResult, reader]);
+  }, [deviceIdIndex, scanDelay, reader, onResult, onError]);
 
   useEffect(() => {
     if (
@@ -106,7 +116,12 @@ export const useQrReader: UseQrReaderHook = ({
     };
   }, [scanDelay, onError, onResult, startScanner]);
 
+  const changeDevice = useCallback(() => {
+    setDeviceIdIndex((prev) => (prev === 0 ? 1 : 0));
+  }, []);
+
   return {
     videoRef,
+    changeDevice,
   };
 };
