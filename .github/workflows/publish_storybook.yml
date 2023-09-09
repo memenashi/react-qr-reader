@@ -8,7 +8,7 @@ jobs:
   deploy-storybook:
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@v4
         - name: Deploy Storybook
           uses: actions/setup-node@v3
           with:
