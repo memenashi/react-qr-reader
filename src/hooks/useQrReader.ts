@@ -63,7 +63,7 @@ export const useQrReader: UseQrReaderHook = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const control = useRef<IScannerControls | null>();
   const previousScan = useRef<Result | null>();
-  const [deviceIdIndex, setDeviceIdIndex] = useState<number>(defaultDeviceId);
+  const [deviceIdIndex, setDeviceIdIndex] = useState<0 | 1>(defaultDeviceId);
 
   const reader = useMemo(() => {
     if (!qrReader) {
@@ -76,8 +76,7 @@ export const useQrReader: UseQrReaderHook = ({
 
   const startScanner = useCallback(async () => {
     if (videoRef.current == null) return;
-    const deviceList = await BrowserQRCodeReader.listVideoInputDevices();
-    const deviceId = deviceList?.[deviceIdIndex]?.deviceId;
+    const deviceId = await gerDeviceId(deviceIdIndex);
     try {
       delay(scanDelay);
       control.current = await reader.decodeFromVideoDevice(
@@ -125,3 +124,11 @@ export const useQrReader: UseQrReaderHook = ({
     changeDevice,
   };
 };
+async function gerDeviceId(value: 0 | 1) {
+  const deviceList = await BrowserQRCodeReader.listVideoInputDevices();
+  const device = deviceList?.[value];
+  if (device) {
+    return device.deviceId;
+  }
+  throw new Error('No device found');
+}
