@@ -43,6 +43,7 @@ const Template: StoryFn<QrReaderProps> = (args) => {
 export const ScanCode = Template.bind({});
 
 ScanCode.args = {
+  defaultDeviceIdIndex: 1,
   ViewFinder,
   videoId: 'video',
   scanDelay: 500,
