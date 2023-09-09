@@ -5,6 +5,10 @@ import { OnResultFunction, useQrReader } from '../hooks/useQrReader';
 
 export interface QrReaderProps {
   /**
+   *
+   */
+  defaultDeviceIdIndex?: 0 | 1;
+  /**
    * Media track constraints object, to specify which camera and capabilities to use
    */
   constraints?: MediaTrackConstraints;
@@ -48,6 +52,7 @@ export interface QrReaderProps {
 
 export const QrReader: FC<QrReaderProps> = ({
   videoContainerStyle = {},
+  defaultDeviceIdIndex,
   containerStyle,
   videoStyle,
   constraints,
@@ -58,6 +63,7 @@ export const QrReader: FC<QrReaderProps> = ({
   videoId,
 }) => {
   const { videoRef } = useQrReader({
+    defaultDeviceId: defaultDeviceIdIndex,
     constraints,
     scanDelay,
     onResult,
