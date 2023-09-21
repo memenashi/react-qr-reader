@@ -52,7 +52,6 @@ export interface QrReaderProps {
 
 export const QrReader: FC<QrReaderProps> = ({
   videoContainerStyle = {},
-  defaultDeviceIdIndex,
   containerStyle,
   videoStyle,
   constraints,
@@ -63,8 +62,6 @@ export const QrReader: FC<QrReaderProps> = ({
   videoId,
 }) => {
   const { videoRef } = useQrReader({
-    defaultDeviceId: defaultDeviceIdIndex,
-    constraints,
     scanDelay,
     onResult,
     videoId,
