@@ -2,32 +2,5 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base"],
   "rangeStrategy": "bump",
-  "schedule": ["before 2am on Saturday"],
-  "packageRules": [
-    {
-      "matchUpdateTypes": ["patch", "minor"],
-      "matchPackagePatterns": ["^@storybook.*", "^storybook.*"],
-      "groupName": "storybook"
-    },
-    {
-      "matchUpdateTypes": ["patch", "minor"],
-      "matchPackagePatterns": "^rollup.*",
-      "groupName": "rollup and plugins"
-    },
-    {
-      "matchUpdateTypes": ["patch", "minor"],
-      "matchPackagePatterns": "^eslint.*",
-      "groupName": "eslint and plugins"
-    },
-    {
-      "matchUpdateTypes": ["patch", "minor"],
-      "matchPackagePatterns": ["typescript"],
-      "groupName": "minor and patch dependencies"
-    },
-    {
-      "matchUpdateTypes": ["patch", "minor"],
-      "matchPackagePatterns": ["!(^@storybook.*)", "!(^storybook.*)", "!(^rollup.*)", "!(^eslint.*)", ".*"],
-      "groupName": "other minor and patch dependencies"
-    }
-  ]
+  "schedule": ["before 2am on Saturday"]
 }
