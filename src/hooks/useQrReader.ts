@@ -1,13 +1,13 @@
-import { RefObject, useCallback, useEffect, useMemo, useRef } from 'react';
-import { Result } from '@zxing/library';
+import { RefObject, useCallback, useEffect, useRef } from 'react';
+import { Exception, Result } from '@zxing/library';
 import { BrowserQRCodeReader, IScannerControls } from '@zxing/browser';
 
 import { delay, isMediaDevicesSupported, isValidType } from '../lib/utils';
 
-type DecodeResult = Result | null | undefined;
+export type DecodeResult = Result | null | undefined;
 
-interface UseQrReaderHookProps {
-  onResult: OnResultFunction;
+export interface UseQrReaderHookProps {
+  onResult?: OnResultFunction;
   /**
    * Callback for retrieving the error
    */
@@ -33,11 +33,9 @@ export type OnResultFunction = (
   control?: IScannerControls
 ) => Promise<void>;
 export type OnErrorFunction = (
-  error: unknown,
+  error: Exception | Error | undefined,
   control?: IScannerControls
 ) => void;
-
-let qrReader: BrowserQRCodeReader | undefined;
 
 export const useQrReader: UseQrReaderHook = ({
   scanDelay = 200,
@@ -46,37 +44,34 @@ export const useQrReader: UseQrReaderHook = ({
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const previousScan = useRef<Result | null>();
-
-  const reader = useMemo(() => {
-    if (!qrReader) {
-      qrReader = new BrowserQRCodeReader(undefined, {
-        delayBetweenScanAttempts: scanDelay,
-      });
-    }
-    return qrReader;
-  }, [scanDelay]);
+  const qrReader = useRef<BrowserQRCodeReader | null>(null);
+  const qrControl = useRef<IScannerControls | undefined>(undefined);
 
   const startScanner = useCallback(async () => {
     if (videoRef.current == null) return;
     try {
       delay(scanDelay);
-      return reader.decodeFromVideoDevice(
+      return qrReader.current?.decodeFromVideoDevice(
         undefined,
         videoRef.current,
-        async (result) => {
+        async (result, error) => {
           if (
             result?.getText() &&
-            result?.getText() !== previousScan.current?.getText()
+            result.getText() !== previousScan.current?.getText()
           ) {
             previousScan.current = result;
-            await onResult?.(result);
+            delay(scanDelay).finally(() => (previousScan.current = null));
+            return onResult?.(result);
+          }
+          if (error) {
+            return onError?.(error);
           }
         }
       );
     } catch (e) {
-      onError?.(e);
+      if (e instanceof Error) onError?.(e);
     }
-  }, [scanDelay, reader, onResult, onError]);
+  }, [scanDelay, onResult, onError]);
 
   useEffect(() => {
     if (
@@ -88,11 +83,18 @@ export const useQrReader: UseQrReaderHook = ({
 
       onError?.(new Error(message));
     }
-    const control = startScanner();
+    if (!qrReader.current) {
+      qrReader.current = new BrowserQRCodeReader(undefined, {
+        delayBetweenScanAttempts: scanDelay,
+        delayBetweenScanSuccess: scanDelay,
+      });
+    }
+
+    startScanner().then((ctrl) => {
+      qrControl.current = ctrl;
+    });
     return () => {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      videoRef.current?.pause();
-      control.then((ctrl) => ctrl?.stop());
+      qrControl.current?.stop();
     };
   }, [scanDelay, onError, onResult, startScanner]);
 

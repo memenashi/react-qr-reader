@@ -1,3 +1,9 @@
 export { QrReader } from './components/QrReader';
 export { ViewFinder } from './components/ViewFinder';
-export { useQrReader } from './hooks/useQrReader';
+export {
+  useQrReader,
+  DecodeResult,
+  UseQrReaderHookProps,
+  OnResultFunction,
+  OnErrorFunction,
+} from './hooks/useQrReader';

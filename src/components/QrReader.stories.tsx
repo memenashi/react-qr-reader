@@ -32,7 +32,7 @@ const Template: StoryFn<QrReaderProps> = (args) => {
       <QrReader
         {...args}
         onResult={async (res: unknown) => handleScan(res)}
-        onError={(err) => setError(err.message)}
+        onError={(err) => setError(err?.message ?? '')}
       />
       <p>The value is: {JSON.stringify(data, null, 2)}</p>
       <p>The error is: {error}</p>
@@ -47,9 +47,6 @@ ScanCode.args = {
   ViewFinder,
   videoId: 'video',
   scanDelay: 500,
-  constraints: {
-    facingMode: 'environment',
-  },
 };
 
 export default {

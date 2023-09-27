@@ -1,7 +1,11 @@
 import { CSSProperties, FC } from 'react';
 
 import { styles } from '../lib/styles';
-import { OnResultFunction, useQrReader } from '../hooks/useQrReader';
+import {
+  OnErrorFunction,
+  OnResultFunction,
+  useQrReader,
+} from '../hooks/useQrReader';
 
 export interface QrReaderProps {
   /**
@@ -9,17 +13,13 @@ export interface QrReaderProps {
    */
   defaultDeviceIdIndex?: 0 | 1;
   /**
-   * Media track constraints object, to specify which camera and capabilities to use
-   */
-  constraints?: MediaTrackConstraints;
-  /**
    * Called when a result is found.
    */
-  onResult: OnResultFunction;
+  onResult?: OnResultFunction;
   /**
    * Called when an error occurs.
    */
-  onError?: (error: Error) => void;
+  onError?: OnErrorFunction;
   /**
    * Property that represents the view finder component
    */
@@ -54,16 +54,17 @@ export const QrReader: FC<QrReaderProps> = ({
   videoContainerStyle = {},
   containerStyle,
   videoStyle,
-  constraints,
   ViewFinder,
   scanDelay,
   className,
   onResult,
+  onError,
   videoId,
 }) => {
   const { videoRef } = useQrReader({
     scanDelay,
     onResult,
+    onError,
     videoId,
   });
 
@@ -83,7 +84,6 @@ export const QrReader: FC<QrReaderProps> = ({
           style={{
             ...styles.video,
             ...videoStyle,
-            transform: constraints?.facingMode === 'user' ? 'scaleX(-1)' : '',
           }}
         />
       </div>
@@ -93,9 +93,6 @@ export const QrReader: FC<QrReaderProps> = ({
 
 QrReader.displayName = 'QrReader';
 QrReader.defaultProps = {
-  constraints: {
-    facingMode: 'environment',
-  },
   videoId: 'video',
   scanDelay: 500,
 };
