@@ -1,6 +1,6 @@
 settings:
   react:
-    version: 'detect'
+    version: '18'
 
 env:
   browser: true
