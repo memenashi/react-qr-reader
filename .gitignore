@@ -9,3 +9,8 @@ dist
 storybook-static
 .npmrc
 .DS_Store
+
+# yarn
+
+.yarn/
+!.yarn/release/*
