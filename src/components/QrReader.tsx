@@ -1,4 +1,4 @@
-import { CSSProperties, FC } from 'react';
+import { CSSProperties, FC, useEffect } from 'react';
 
 import { styles } from '../lib/styles';
 import {
@@ -61,12 +61,16 @@ export const QrReader: FC<QrReaderProps> = ({
   onError,
   videoId,
 }) => {
-  const { videoRef } = useQrReader({
+  const { videoRef, resetScanResult } = useQrReader({
     scanDelay,
     onResult,
     onError,
     videoId,
   });
+
+  useEffect(() => {
+    resetScanResult();
+  }, [resetScanResult]);
 
   return (
     <section className={className} style={containerStyle}>
