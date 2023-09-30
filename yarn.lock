@@ -1978,7 +1978,7 @@
     remark-slug "^6.0.0"
     ts-dedent "^2.0.0"
 
-"@storybook/addon-essentials@^7.0.27":
+"@storybook/addon-essentials@^7.4.5":
   version "7.4.5"
   resolved "https://registry.yarnpkg.com/@storybook/addon-essentials/-/addon-essentials-7.4.5.tgz#b580713a015dfe6317c211d16ba10a6db7026f6f"
   integrity sha512-H7zZWJXZP0UU2kXfo9zlQfjIKHuuqYBK7PZ2/SL5y08mTrbtt1BfqYScz3xRvHocaFcsBWCXdy8jJULT4KFUpw==
@@ -2007,7 +2007,7 @@
     "@storybook/global" "^5.0.0"
     "@storybook/preview-api" "7.4.5"
 
-"@storybook/addon-mdx-gfm@^7.0.27":
+"@storybook/addon-mdx-gfm@^7.4.5":
   version "7.4.5"
   resolved "https://registry.yarnpkg.com/@storybook/addon-mdx-gfm/-/addon-mdx-gfm-7.4.5.tgz#9b1e677d81a8a7dcbb809d45a8cb17910fed1045"
   integrity sha512-Yk4PSKRruGkvHvAZo7t+NlREsMr2PP7HV1I6qPI57aMJj7eo+UqyyC8UJAfnyOi6FRQD0l7nzwYzwSugPchDIg==
@@ -2192,7 +2192,7 @@
     telejson "^7.2.0"
     tiny-invariant "^1.3.1"
 
-"@storybook/cli@7.4.5", "@storybook/cli@^7.0.27":
+"@storybook/cli@7.4.5", "@storybook/cli@^7.4.5":
   version "7.4.5"
   resolved "https://registry.yarnpkg.com/@storybook/cli/-/cli-7.4.5.tgz#2d21e56f6172ba0a0e162c7d37ded4b07e726d66"
   integrity sha512-PlTkcHdKCugg3pD1zkBP/oFazcZsr7F3wdEmTvygfH0Cx/sQWg5wXBZCYKmf0ONRK4RKL3LVM8DRpeYiQVEFWg==
@@ -2558,7 +2558,7 @@
   resolved "https://registry.yarnpkg.com/@storybook/react-dom-shim/-/react-dom-shim-7.4.5.tgz#77c27c169aaacbeb0a601a53f81421abcfbe8d1c"
   integrity sha512-/hGe8yuiWbT7L3ZsllmJPgxT9MEQE3k23FhliyKx6IGHsWoYaEsPYPZ9tygqtKY8RpqqMUKWz8+kbO79zUxaoQ==
 
-"@storybook/react-webpack5@^7.0.27":
+"@storybook/react-webpack5@^7.4.5":
   version "7.4.5"
   resolved "https://registry.yarnpkg.com/@storybook/react-webpack5/-/react-webpack5-7.4.5.tgz#fa5c2e4204144deb2eaa3f0b894ffd22c2c8f8d9"
   integrity sha512-2IgGuj/s6mZZoK22i7IfSSpkE00m1t/o9+C7Vxw+m79N/cyMbfmxuNJJATV9NZMrBd65UKACTitolM+ZneqB5Q==
@@ -2568,7 +2568,7 @@
     "@storybook/react" "7.4.5"
     "@types/node" "^16.0.0"
 
-"@storybook/react@7.4.5", "@storybook/react@^7.0.27":
+"@storybook/react@7.4.5", "@storybook/react@^7.4.5":
   version "7.4.5"
   resolved "https://registry.yarnpkg.com/@storybook/react/-/react-7.4.5.tgz#b6675b3b42fe1fbb2f68973f8a792a4efe2ebb0f"
   integrity sha512-Tiylrs3uFO8QSvH1w3ueSxlAgh2fteH0edRVKaX01M/h47+QqEiZqq/dYkVDvLHngF+CCCwE3OY8nNe6L14Xkw==
@@ -9089,7 +9089,7 @@ store2@^2.14.2:
   resolved "https://registry.yarnpkg.com/store2/-/store2-2.14.2.tgz#56138d200f9fe5f582ad63bc2704dbc0e4a45068"
   integrity sha512-siT1RiqlfQnGqgT/YzXVUNsom9S0H1OX+dpdGN1xkyYATo4I6sep5NmsRD/40s3IIOvlCq6akxkqG82urIZW1w==
 
-storybook@^7.0.27:
+storybook@^7.4.5:
   version "7.4.5"
   resolved "https://registry.yarnpkg.com/storybook/-/storybook-7.4.5.tgz#3456d2de3b28661b0a853c0ecbbdf2f6d695ac4f"
   integrity sha512-J7fidphTJ6SJHlR8f/USQE30K6ipbynLVLsTOz0bNYW/0Ua2t9u6dAYGbbq6bLikl3zxzQbdm9lXMUzmaYAdIA==
@@ -9107,6 +9107,7 @@ string-natural-compare@^3.0.1:
   integrity sha512-n3sPwynL1nwKi3WJ6AIsClwBMa0zTi54fn2oLU6ndfTSIO05xaznjSf15PcBZU6FNWbmN5Q6cxT4V5hGvB4taw==
 
 "string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0, string-width@^4.2.0:
+  name string-width-cjs
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -9190,6 +9191,7 @@ string_decoder@~1.1.1:
     safe-buffer "~5.1.0"
 
 "strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+  name strip-ansi-cjs
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -10019,6 +10021,7 @@ wordwrap@^1.0.0:
   integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
