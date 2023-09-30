@@ -3,7 +3,7 @@ import { StoryFn } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { ViewFinder } from './ViewFinder';
-import { QrReader } from '..';
+import { OnResultFunction, QrReader } from '..';
 import { QrReaderProps } from './QrReader';
 
 const styles = {
@@ -20,10 +20,8 @@ const Template: StoryFn<QrReaderProps> = (args) => {
   const [error, setError] = useState('');
   const [data, setData] = useState('');
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleScan = (result: any) => {
+  const handleScan: OnResultFunction = async (result) => {
     scanAction(result);
-    console.log(new Date(), result);
     setData(result?.getText() ?? 'No result');
   };
 
@@ -31,7 +29,7 @@ const Template: StoryFn<QrReaderProps> = (args) => {
     <div style={styles.container}>
       <QrReader
         {...args}
-        onResult={async (res: unknown) => handleScan(res)}
+        onResult={handleScan}
         onError={(err) => setError(err?.message ?? '')}
       />
       <p>The value is: {JSON.stringify(data, null, 2)}</p>
@@ -43,9 +41,7 @@ const Template: StoryFn<QrReaderProps> = (args) => {
 export const ScanCode = Template.bind({});
 
 ScanCode.args = {
-  defaultDeviceIdIndex: 1,
   ViewFinder,
-  videoId: 'video',
   scanDelay: 500,
 };
 

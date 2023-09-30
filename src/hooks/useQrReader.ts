@@ -1,6 +1,7 @@
 import { RefObject, useCallback, useEffect, useRef } from 'react';
 import { Exception, Result } from '@zxing/library';
 import { BrowserQRCodeReader, IScannerControls } from '@zxing/browser';
+import { DecodeContinuouslyCallback } from '@zxing/browser/esm/common/DecodeContinuouslyCallback';
 
 import { delay, isMediaDevicesSupported, isValidType } from '../lib/utils';
 
@@ -23,7 +24,10 @@ export interface UseQrReaderHookProps {
 }
 
 interface UseQrReaderReturn {
+  /** Reference to the video element */
   videoRef: RefObject<HTMLVideoElement> | undefined;
+  /** Resets the scan result, allowing for a re-scan of the same value */
+  resetScanResult: () => void;
 }
 
 type UseQrReaderHook = (props: UseQrReaderHookProps) => UseQrReaderReturn;
@@ -43,9 +47,31 @@ export const useQrReader: UseQrReaderHook = ({
   onError,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const previousScan = useRef<Result | null>();
+  const previousScan = useRef<string | null>();
+  const previousError = useRef<Exception | Error | undefined>();
   const qrReader = useRef<BrowserQRCodeReader | null>(null);
   const qrControl = useRef<IScannerControls | undefined>(undefined);
+
+  const scanCallback: DecodeContinuouslyCallback = useCallback(
+    async (result, error, control) => {
+      const resultText = result?.getText();
+      const previousScanText = previousScan.current;
+      if (resultText && resultText != previousScanText) {
+        previousScan.current = resultText;
+        return onResult?.(result, control);
+      }
+      if (error && error != previousError.current) {
+        previousError.current = error;
+        return onError?.(error, control);
+      }
+    },
+    [onError, onResult]
+  );
+
+  const resetScanResult = useCallback(() => {
+    previousScan.current = null;
+    previousError.current = undefined;
+  }, []);
 
   const startScanner = useCallback(async () => {
     if (videoRef.current == null) return;
@@ -54,24 +80,12 @@ export const useQrReader: UseQrReaderHook = ({
       return qrReader.current?.decodeFromVideoDevice(
         undefined,
         videoRef.current,
-        async (result, error) => {
-          if (
-            result?.getText() &&
-            result.getText() !== previousScan.current?.getText()
-          ) {
-            previousScan.current = result;
-            delay(scanDelay).finally(() => (previousScan.current = null));
-            return onResult?.(result);
-          }
-          if (error) {
-            return onError?.(error);
-          }
-        }
+        scanCallback
       );
     } catch (e) {
       if (e instanceof Error) onError?.(e);
     }
-  }, [scanDelay, onResult, onError]);
+  }, [scanDelay, scanCallback, onError]);
 
   useEffect(() => {
     if (
@@ -100,5 +114,6 @@ export const useQrReader: UseQrReaderHook = ({
 
   return {
     videoRef,
+    resetScanResult,
   };
 };
