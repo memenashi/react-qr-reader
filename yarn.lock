@@ -2133,7 +2133,7 @@ __metadata:
     prettier: ^3.0.3
     react: ^18.2.0
     react-dom: ^18.2.0
-    rollup: ^3.29.2
+    rollup: ^3.29.4
     rollup-plugin-cleaner: ^1.0.0
     rollup-plugin-copy: ^3.5.0
     rollup-plugin-dts: ^6.0.2
@@ -12398,7 +12398,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^3.29.2":
+"rollup@npm:^3.29.4":
   version: 3.29.4
   resolution: "rollup@npm:3.29.4"
   dependencies:
