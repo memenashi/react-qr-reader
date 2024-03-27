@@ -61,7 +61,7 @@
     "@storybook/react": "^7.4.5",
     "@storybook/react-webpack5": "^7.4.5",
     "@storybook/storybook-deployer": "^2.8.16",
-    "@types/react": "^18.2.22",
+    "@types/react": "^18.2.73",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.7.2",
     "babel-loader": "^9.1.3",
