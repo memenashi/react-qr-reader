@@ -2113,7 +2113,7 @@ __metadata:
     "@storybook/react": ^7.4.5
     "@storybook/react-webpack5": ^7.4.5
     "@storybook/storybook-deployer": ^2.8.16
-    "@types/react": ^18.2.22
+    "@types/react": ^18.2.73
     "@typescript-eslint/eslint-plugin": ^6.7.2
     "@typescript-eslint/parser": ^6.7.2
     "@zxing/browser": ^0.1.4
@@ -4425,7 +4425,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:>=16, @types/react@npm:^18.2.22":
+"@types/react@npm:>=16":
   version: 18.2.23
   resolution: "@types/react@npm:18.2.23"
   dependencies:
@@ -4433,6 +4433,16 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: efb9d1ed1940c0e7ba08a21ffba5e266d8dbbb8fe618cfb97bc902dfc96385fdd8189e3f7f64b4aa13134f8e61947d60560deb23be151253c3a97b0d070897ca
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.2.73":
+  version: 18.2.73
+  resolution: "@types/react@npm:18.2.73"
+  dependencies:
+    "@types/prop-types": "*"
+    csstype: ^3.0.2
+  checksum: 0921d3e3286f11365e796f01eff4fb64de315c68f569e0bbfdaa7680dc4b774c7e8dc416d72d77f7f16a0c2075048429386a55bbfd43ac507d1dddc8d44142e7
   languageName: node
   linkType: hard
 
